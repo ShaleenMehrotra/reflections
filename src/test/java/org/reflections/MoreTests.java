@@ -13,6 +13,7 @@ import java.net.URLClassLoader;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -34,7 +35,7 @@ public class MoreTests {
     }
 
     @Test
-    public void no_exception_when_configured_scanner_store_is_empty() {
+    public void no_exception_when_configured_scanner_store_is_empty() throws ClassNotFoundException {
         Reflections reflections = new Reflections(
             new ConfigurationBuilder()
                 .setUrls(ClasspathHelper.forClass(TestModel.class))
@@ -43,6 +44,18 @@ public class MoreTests {
         assertNull(reflections.getStore().get(SubTypes.index()));
         assertTrue(reflections.getSubTypesOf(TestModel.C1.class).isEmpty());
         assertTrue(reflections.get(SubTypes.of(TestModel.C1.class)).isEmpty());
+    }
+
+    @Test
+    public void should_throw_class_not_found_exception() throws ClassNotFoundException {
+        Reflections reflections = new Reflections(
+                new ConfigurationBuilder()
+                        .setUrls(ClasspathHelper.forClass(Logger.class))
+                        .setScanners(Scanners.Resources));
+
+        assertNull(reflections.getStore().get(SubTypes.index()));
+        assertTrue(reflections.getSubTypesOf(Logger.class).isEmpty());
+        assertTrue(reflections.get(SubTypes.of(Logger.class)).isEmpty());
     }
 
     @Test
@@ -66,7 +79,7 @@ public class MoreTests {
     }
 
     @Test
-    public void test_custom_url_class_loader() throws MalformedURLException {
+    public void test_custom_url_class_loader() throws MalformedURLException, ClassNotFoundException {
         URL externalUrl = new URL("jar:file:" + ReflectionsTest.getUserDir() + "/src/test/resources/another-project.jar!/");
         URLClassLoader externalClassLoader = new URLClassLoader(new URL[]{externalUrl}, Thread.currentThread().getContextClassLoader());
 

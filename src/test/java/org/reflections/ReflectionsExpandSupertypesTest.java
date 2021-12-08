@@ -27,7 +27,7 @@ public class ReflectionsExpandSupertypesTest {
     }
 
     @Test
-    public void testExpandSupertypes() {
+    public void testExpandSupertypes() throws ClassNotFoundException {
         Reflections refExpand = new Reflections(new ConfigurationBuilder().
                 setUrls(ClasspathHelper.forClass(TestModel.ScannedScope.C.class)).
                 filterInputsBy(inputsFilter));
@@ -38,7 +38,7 @@ public class ReflectionsExpandSupertypesTest {
     }
 
     @Test
-    public void testNotExpandSupertypes() {
+    public void testNotExpandSupertypes() throws ClassNotFoundException {
         Reflections refDontExpand = new Reflections(
             new ConfigurationBuilder()
                 .forPackage("org.reflections")

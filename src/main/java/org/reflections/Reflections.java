@@ -359,10 +359,11 @@ public class Reflections implements NameHelper {
      * <p>similar to {@code get(SubTypes.of(type))}
      * <p></p><i>depends on {@link Scanners#SubTypes} configured</i>
      */
-    public <T> Set<Class<? extends T>> getSubTypesOf(Class<T> type) {
+    public <T> Set<Class<? extends T>> getSubTypesOf(Class<T> type) throws ClassNotFoundException {
         //noinspection unchecked
-        return (Set<Class<? extends T>>) get(SubTypes.of(type)
-            .as((Class<? extends T>) Class.class, loaders()));
+        Set<Class<? extends T>> subTypes;
+        subTypes = (Set<Class<? extends T>>) get(SubTypes.of(type).as((Class<? extends T>) Class.class, loaders()));
+        return subTypes;
     }
 
     /**

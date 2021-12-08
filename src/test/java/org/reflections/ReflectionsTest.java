@@ -51,7 +51,7 @@ public class ReflectionsTest implements NameHelper {
     }
 
     @Test
-    public void testSubTypesOf() {
+    public void testSubTypesOf() throws ClassNotFoundException {
         assertThat(reflections.getSubTypesOf(I1.class), are(I2.class, C1.class, C2.class, C3.class, C5.class));
         assertThat(reflections.getSubTypesOf(C1.class), are(C2.class, C3.class, C5.class));
 
