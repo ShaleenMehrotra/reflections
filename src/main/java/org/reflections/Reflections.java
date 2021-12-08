@@ -359,6 +359,7 @@ public class Reflections implements NameHelper {
      * <p>similar to {@code get(SubTypes.of(type))}
      * <p></p><i>depends on {@link Scanners#SubTypes} configured</i>
      */
+    /** CS427 Issue link: https://github.com/ronmamo/reflections/issues/311 */
     public <T> Set<Class<? extends T>> getSubTypesOf(Class<T> type) throws ClassNotFoundException {
         //noinspection unchecked
         Set<Class<? extends T>> subTypes;
